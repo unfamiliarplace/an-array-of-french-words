@@ -1,0 +1,1 @@
+const fr_24_alpha = ["constitutionnalisassions", "constitutionnaliseraient"];
