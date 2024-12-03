@@ -1,0 +1,1 @@
+const fr_1_9_alpha = ["anticonstitutionnellement"];
