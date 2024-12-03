@@ -1,1 +1,1 @@
-const fr_1_alpha = ["a", "y", "à"];
+const fr_1_alpha = ["a", "ô", "y", "à"];
