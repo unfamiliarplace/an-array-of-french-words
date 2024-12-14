@@ -21,15 +21,29 @@ def check(n: str) -> None:
 
     words -= incl
     words -= excl
+    print(f'{len(words)} words | {len(incl)} included | {len(excl)} excluded')
+
+    if not words:
+        print('Already sorted this set')
+        return
+
     words = sorted(words)
-
-    print('\nEnter = Include | / = Exclude | P = Pass | U = Undo | S = Save | Q = Save and quit | X = Quit without saving\n')
-
-    # lol
     commands = []
 
+    print('\nEnter = Include | / = Exclude | P = Pass for now | U = Undo | S = Save | Q = Save and quit | X = Quit without saving\n')
+
+    def _save() -> None:
+        for command in commands:
+            eval(command)
+        commands.clear()
+
+        print(f'{len(words)} words | {len(incl)} included | {len(excl)} excluded')
+
+        save_included(n, incl)
+        save_excluded(n, excl)
+
     i = 0
-    while i < len(words):
+    while 0 <= i < len(words):
         word = words[i]
 
         response = input(f'{word} : ').upper().strip()
@@ -48,25 +62,19 @@ def check(n: str) -> None:
             
             case 'U':
                 commands.pop()
+                i -= 1
             
             case 'S':
-                for command in commands:
-                    eval(command)
-                commands = []
+                _save()
             
             case 'Q':
                 break
 
             case 'X':
-                commands = []
+                commands.clear()
                 break
     
-    for command in commands:
-        eval(command)
-    commands = []
-
-    save_included(n, incl)
-    save_excluded(n, excl)
+    _save()
 
 def load_included(n: str) -> set[str]:
     path = PATH_DATA / f'{n}_incl.txt'
