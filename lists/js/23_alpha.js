@@ -1,1 +1,0 @@
-const fr_23_alpha = ["constitutionnalisassent", "constitutionnalisassiez", "constitutionnaliserions", "inconstitutionnellement", "institutionnalisassions", "institutionnaliseraient", "électroencéphalogrammes"];

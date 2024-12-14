@@ -1,0 +1,1 @@
+const 25_alpha = ["anticonstitutionnellement"];

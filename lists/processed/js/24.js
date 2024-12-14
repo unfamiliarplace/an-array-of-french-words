@@ -1,0 +1,1 @@
+const 24 = ["constitutionnalisassions", "constitutionnaliseraient", "hospitalo-universitaires", "oto-rhino-laryngologiste"];
