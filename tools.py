@@ -1,13 +1,17 @@
 import json
 from pathlib import Path
 
+def read_words(path: Path) -> list[str]:
+    with open(path, 'r', encoding='utf-8') as f:
+        return json.loads(f.read())
+
 def make_folders(paths: list[Path]) -> None:
     for path in paths:
         if not path.exists():
             path.mkdir(parents=True, exist_ok=True)
 
 def js_one(path_json: Path, path_destination: Path) -> None:
-    
+
     with open(path_json, 'r', encoding='utf-8') as f:
         words = json.loads(f.read())
 
