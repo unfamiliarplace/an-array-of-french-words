@@ -1,5 +1,5 @@
 from pathlib import Path
-from tools import make_folders, read_words
+from tools import make_folders, load_words, save_words
 from enum import Enum
 
 PATH_LISTS = Path('lists')
@@ -13,15 +13,16 @@ class Response(Enum):
     PASS: int=2
 
 def check(n: str) -> None:
-    path = PATH_ALPHA / f'{n}_alpha.json'
-    words = set(read_words(path))
+    words = set(load_words(PATH_ALPHA / f'{n}_alpha.json'))
 
-    incl = load_included(n)
-    excl = load_excluded(n)
+    incl = set(load_words(PATH_DATA / f'{n}_incl.txt'))
+    excl_nw = set(load_words(PATH_DATA / f'{n}_excl_nonword.txt'))
+    excl_ns = set(load_words(PATH_DATA / f'{n}_excl_nsfw.txt'))
+    excl_in = set(load_words(PATH_DATA / f'{n}_excl_inflection.txt'))
 
     words -= incl
-    words -= excl
-    print(f'{len(words)} words | {len(incl)} included | {len(excl)} excluded')
+    words = words - excl_nw - excl_ns - excl_in
+    print(f'{len(words)} words | {len(incl)} confirmed | {len(excl_nw)} nonwords | {len(excl_ns)} NSFW words | {len(excl_in)} inflections')
 
     if not words:
         print('Already sorted this set')
@@ -37,10 +38,12 @@ def check(n: str) -> None:
             eval(command)
         commands.clear()
 
-        print(f'{len(words)} words | {len(incl)} included | {len(excl)} excluded')
+        print(f'{len(words)} words | {len(incl)} confirmed | {len(excl_nw)} nonwords | {len(excl_ns)} NSFW words | {len(excl_in)} inflections')
 
-        save_included(n, incl)
-        save_excluded(n, excl)
+        save_words(PATH_DATA / f'{n}_incl.txt', incl)
+        save_words(PATH_DATA / f'{n}_excl_nonword.txt', excl_nw)
+        save_words(PATH_DATA / f'{n}_excl_nsfw.txt', excl_ns)
+        save_words(PATH_DATA / f'{n}_excl_inflection.txt', excl_in)
 
     i = 0
     while 0 <= i < len(words):
@@ -75,38 +78,6 @@ def check(n: str) -> None:
                 break
     
     _save()
-
-def load_included(n: str) -> set[str]:
-    path = PATH_DATA / f'{n}_incl.txt'
-    if not path.exists():
-        return set()
-
-    with open(path, 'r', encoding='utf-8') as f:
-        return set(f.read().split(','))
-
-def save_included(n: str, words: set[str]) -> None:
-    if not words:
-        return
-    
-    path = PATH_DATA / f'{n}_incl.txt'
-    with open(path, 'w', encoding='utf-8') as f:
-        f.write(','.join(words))
-
-def load_excluded(n: str) -> set[str]:
-    path = PATH_DATA / f'{n}_excl.txt'
-    if not path.exists():
-        return set()
-    
-    with open(path, 'r', encoding='utf-8') as f:
-        return set(f.read().split(','))
-
-def save_excluded(n: str, words: set[str]) -> None:
-    if not words:
-        return
-
-    path = PATH_DATA / f'{n}_excl.txt'
-    with open(path, 'w', encoding='utf-8') as f:
-        f.write(','.join(words))
 
 def run() -> None:
     make_folders([PATH_LISTS, PATH_DIVIDED, PATH_DATA])

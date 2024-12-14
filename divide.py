@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from tools import make_folders, js_many, read_words
+from tools import make_folders, js_many, load_words
 
 PATH_LISTS = Path('lists')
 PATH_MASTER = PATH_LISTS / 'master.json'
@@ -45,7 +45,7 @@ def len_alpha_range(words: list[str]) -> None:
 
 def run() -> None:
     make_folders([PATH_LISTS, PATH_DIVIDED, PATH_JS])
-    len_alpha_range(read_words(PATH_MASTER))
+    len_alpha_range(load_words(PATH_MASTER))
     js_many(PATH_DIVIDED, PATH_JS)
 
 if __name__ == '__main__':
