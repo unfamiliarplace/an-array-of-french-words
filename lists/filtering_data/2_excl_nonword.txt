@@ -1,0 +1,1 @@
+["ha", "ex", "li", "ms", "km", "ru", "ès", "cl", "ch", "go", "nô", "eh", "kg", "ra", "ho", "in", "ut", "cf", "dl", "ré", "cg", "dm", "cm", "do", "mi", "ph", "es", "té", "mg", "cc", "dg", "hi", "us", "fa", "na"]

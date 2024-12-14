@@ -1,0 +1,1 @@
+["hé", "bu", "en", "nu", "je", "là", "os", "ni", "où", "se", "as", "ah", "ta", "la", "ce", "ci", "et", "né", "tu", "aï", "pi", "un", "au", "de", "le", "on", "ma", "oh", "ou", "ri", "mû", "eu", "or", "dû", "ça", "te", "oc", "vu", "dé", "pu", "an", "du", "mu", "ne", "sa", "me", "lu", "fi", "xi", "va", "si", "if", "su", "çà", "il"]

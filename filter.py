@@ -31,7 +31,8 @@ def check(n: str) -> None:
     words = sorted(words)
     commands = []
 
-    print('\nEnter = Include | / = Exclude | P = Pass for now | U = Undo | S = Save | Q = Save and quit | X = Quit without saving\n')
+    print('\nEnter = Include | / = Nonword | I = Inflection | J = NSFW | P = Pass for now')
+    print('U = Undo | S = Save | Q = Save and quit | X = Quit without saving\n')
 
     def _save() -> None:
         for command in commands:
@@ -40,10 +41,10 @@ def check(n: str) -> None:
 
         print(f'{len(words)} words | {len(incl)} confirmed | {len(excl_nw)} nonwords | {len(excl_ns)} NSFW words | {len(excl_in)} inflections')
 
-        save_words(PATH_DATA / f'{n}_incl.txt', incl)
-        save_words(PATH_DATA / f'{n}_excl_nonword.txt', excl_nw)
-        save_words(PATH_DATA / f'{n}_excl_nsfw.txt', excl_ns)
-        save_words(PATH_DATA / f'{n}_excl_inflection.txt', excl_in)
+        save_words(PATH_DATA / f'{n}_incl.txt', list(incl))
+        save_words(PATH_DATA / f'{n}_excl_nonword.txt', list(excl_nw))
+        save_words(PATH_DATA / f'{n}_excl_nsfw.txt', list(excl_ns))
+        save_words(PATH_DATA / f'{n}_excl_inflection.txt', list(excl_in))
 
     i = 0
     while 0 <= i < len(words):
@@ -57,7 +58,15 @@ def check(n: str) -> None:
                 i += 1
             
             case '/':
-                commands.append(f'excl.add("{word}")')
+                commands.append(f'excl_nw.add("{word}")')
+                i += 1
+            
+            case 'I':
+                commands.append(f'excl_in.add("{word}")')
+                i += 1
+            
+            case 'J':
+                commands.append(f'excl_ns.add("{word}")')
                 i += 1
 
             case 'P':
