@@ -1,16 +1,12 @@
 import json
 from pathlib import Path
+from tools import make_folders, js_many
 
 PATH_LISTS = Path('lists')
 PATH_MASTER = PATH_LISTS / 'master.json'
 
 PATH_PROCESSED = PATH_LISTS / 'processed'
 PATH_JS = PATH_PROCESSED / 'js'
-
-def make_folders(paths: list[Path]) -> None:
-    for path in paths:
-        if not path.exists():
-            path.mkdir(parents=True, exist_ok=True)
 
 def len_alpha_range(words: list[str]) -> None:
 
@@ -47,22 +43,12 @@ def len_alpha_range(words: list[str]) -> None:
         with open(PATH_PROCESSED / 'alpha_range' / f'1_{n}_alpha.json', 'w', encoding='utf-8') as f:
             f.write(json.dumps(_1_to_, ensure_ascii=False))
 
-def js(path: Path) -> None:
-    with open(path, 'r', encoding='utf-8') as f:
-        words = json.loads(f.read())
-    with open(PATH_JS / f'{path.stem}.js', 'w', encoding='utf-8') as f:
-        f.write(f'const {path.stem} = {json.dumps(words, ensure_ascii=False)};')
-    
-def js_all() -> None:
-    for path in PATH_PROCESSED.rglob('*.json'):
-        js(path)
-
 def run() -> None:
     make_folders([PATH_LISTS, PATH_PROCESSED, PATH_JS])
     with open(PATH_MASTER, 'r', encoding='utf-8') as f:
         words = json.loads(f.read())
         len_alpha_range(words)
-        js_all()
+        js_many(PATH_PROCESSED, PATH_JS)
 
 if __name__ == '__main__':
     run()
