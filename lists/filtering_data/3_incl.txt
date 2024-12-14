@@ -1,0 +1,1 @@
+["bac", "ben", "agi", "air", "bic", "ami", "bon", "art", "bof", "blé", "arc", "bel", "boa", "bye", "bit", "axé", "bis", "bar", "bat", "bas", "ail", "bol", "axe", "ale", "but", "bal", "bec", "aux", "avé", "ace", "bru", "ban", "aïs"]
