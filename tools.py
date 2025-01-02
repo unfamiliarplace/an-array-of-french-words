@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+PREFIX = 'fr'
+
 def load_words(path: Path) -> list[str]:
     if not path.exists():
         return []
@@ -26,7 +28,7 @@ def js_one(path_json: Path, path_destination: Path) -> None:
         words = json.loads(f.read())
 
     with open(path_destination / f'{path_json.stem}.js', 'w', encoding='utf-8') as f:
-        f.write(f'const {path_json.stem} = {json.dumps(words, ensure_ascii=False)};')
+        f.write(f'const {PREFIX}_{path_json.stem} = {json.dumps(words, ensure_ascii=False)};')
     
 def js_many(path_origin: Path, path_destination: Path) -> None:
     for path in path_origin.rglob('*.json'):
